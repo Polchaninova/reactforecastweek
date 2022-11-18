@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import "./weather.css";
 import axios from "axios";
 
-export default function Weather() {
-  const [ready, setReady] = useState(false);
-  const [weatherData, setweatherData] = useState({});
+export default function Weather(props) {
+  // const [ready, setReady] = useState(false);
+  const [weatherData, setweatherData] = useState({ ready: false });
+
   function handleResponse(response) {
     console.log(response.data);
     setweatherData({
+      ready: true,
       temperature: response.data.main.temp,
       humidity: response.data.main.humidity,
       date: "Today 11:00",
@@ -17,10 +19,10 @@ export default function Weather() {
       description: "response.data.weather[0].description",
       iconUrl: `https://ssl.gstatic.com/onebox/weather/64/cloudy.png`,
     });
-    setReady(true);
+    // setReady(true);
   }
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <form>
@@ -68,9 +70,9 @@ export default function Weather() {
       </div>
     );
   } else {
-    const apiKey = `12b765e58ad1df7247a7dd8bf64421e7`;
-    let city = "Kharkiv";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    const apiKey = `73d7b1ddc616a00d308fd2345c12cbdc`;
+    // let city = "Kharkiv";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
 
     return "Loading...";
