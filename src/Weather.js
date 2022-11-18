@@ -8,7 +8,6 @@ export default function Weather(props) {
   const [weatherData, setweatherData] = useState({ ready: false });
 
   function handleResponse(response) {
-    console.log(response.data);
     setweatherData({
       ready: true,
       temperature: response.data.main.temp,
@@ -70,7 +69,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    const apiKey = `73d7b1ddc616a00d308fd2345c12cbdc`;
+    const apiKey = `5f472b7acba333cd8a035ea85a0d4d4c`;
     // let city = "Kharkiv";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
