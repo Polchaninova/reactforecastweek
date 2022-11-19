@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import WeatherInfo from "./WeatherInfo";
 import "./weather.css";
@@ -24,11 +24,13 @@ export default function Weather(props) {
 
   function search() {
     //city
-    const apiKey = `5f472b7acba333cd8a035ea85a0d4d4c`;
+    const apiKey = `12b765e58ad1df7247a7dd8bf64421e7`;
     // let city = "Kharkiv";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(search, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -67,7 +69,6 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    search();
     return "Loading...";
   }
 }
