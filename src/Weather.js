@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+// import WeatherSearch from "./WeatherSearch";
 import WeatherInfo from "./WeatherInfo";
+
 import "./weather.css";
 import axios from "axios";
 import WeatherForecast from "./WeatherForecast";
@@ -44,9 +45,24 @@ export default function Weather(props) {
     setCity(event.target.value);
   }
 
+  function retrievePosition(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let units = "metric";
+    let apiKey = "12b765e58ad1df7247a7dd8bf64421e7";
+    let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather";
+    let apiUrl = `${apiEndpoint}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function getCurrentPosition() {
+    navigator.geolocation.getCurrentPosition(retrievePosition);
+  }
+
   if (weatherData.ready) {
     return (
       <div className="Weather">
+        let form =(
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-9">
@@ -65,8 +81,63 @@ export default function Weather(props) {
                 className="btn btn-primary w-100"
               />
             </div>
+            <div className="col-3">
+              <button
+                className="btn btn-success w-100"
+                type="button"
+                onClick={getCurrentPosition}
+                id="current-location-button"
+              >
+                Current
+              </button>
+            </div>
           </div>
         </form>
+        );
+        <div className="container">
+          <nav className="navbar navbar-light">
+            <button
+              className="navbar-brand btn"
+              id="navbar-kh"
+              onClick={(e) => {
+                setCity("Kharkiv");
+                handleSubmit(e, "Kharkiv");
+              }}
+            >
+              Kharkiv
+            </button>
+            <button
+              className="navbar-brand btn"
+              id="navbar-lv"
+              onClick={(e) => {
+                setCity("Lviv");
+                handleSubmit(e);
+              }}
+            >
+              Lviv
+            </button>
+            <button
+              className="navbar-brand btn"
+              id="navbar-od"
+              onClick={(e) => {
+                setCity("Odessa");
+                handleSubmit(e, "Odessa");
+              }}
+            >
+              Odessa
+            </button>
+            <button
+              className="navbar-brand btn"
+              id="navbar-ky"
+              onClick={(e) => {
+                setCity("Kyiv");
+                handleSubmit(e, Kyiv);
+              }}
+            >
+              Kyiv
+            </button>
+          </nav>
+        </div>
         <WeatherInfo data={weatherData} />
         <WeatherForecast coordinates={weatherData.coordinates} />
       </div>
