@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable array-callback-return */
+import React, { useEffect, useState } from "react";
 import WeatherForecastDay, { days } from "./Weather.ForecastDay";
 
 import "./WeatherForecast.css";
@@ -7,6 +8,13 @@ import axios from "axios";
 export default function WeatherForecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
+
+  useEffect(() => {
+    if (loaded) {
+      setLoaded(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.coordinates]);
 
   function handleResponse(response) {
     // console.log(response.data);

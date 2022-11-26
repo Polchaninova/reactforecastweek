@@ -61,86 +61,88 @@ export default function Weather(props) {
 
   if (weatherData.ready) {
     return (
-      <div className="Weather">
-        let form =(
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-9">
-              <input
-                type="search"
-                placeholder="Enter a city.."
-                className="form-control"
-                autoFocus="on"
-                onChange={handleCityChange}
-              />
-            </div>
-            <div className="col-3">
-              <input
-                type="submit"
-                value="Search"
-                className="btn btn-primary w-100"
-              />
-            </div>
-            <div className="col-3">
+      <>
+        <div className="Weather">
+          <div className="container">
+            <nav className="navbar navbar-light">
               <button
-                className="btn btn-success w-100"
-                type="button"
-                onClick={getCurrentPosition}
-                id="current-location-button"
+                className="navbar-brand btn text-white"
+                id="navbar-kh"
+                onClick={(e) => {
+                  setCity("Kharkiv");
+                  handleSubmit(e, "Kharkiv");
+                }}
               >
-                Current
+                Kharkiv
               </button>
-            </div>
+              <button
+                className="navbar-brand btn text-white"
+                id="navbar-lv"
+                onClick={(e) => {
+                  setCity("Lviv");
+                  handleSubmit(e);
+                }}
+              >
+                Lviv
+              </button>
+              <button
+                className="navbar-brand btn text-white"
+                id="navbar-od"
+                onClick={(e) => {
+                  setCity("Odessa");
+                  handleSubmit(e, "Odessa");
+                }}
+              >
+                Odessa
+              </button>
+              <button
+                className="navbar-brand btn text-white"
+                id="navbar-ky"
+                onClick={(e) => {
+                  setCity("Kyiv");
+                  handleSubmit(e, "Kyiv");
+                }}
+              >
+                Kyiv
+              </button>
+            </nav>
           </div>
-        </form>
-        );
-        <div className="container">
-          <nav className="navbar navbar-light">
-            <button
-              className="navbar-brand btn"
-              id="navbar-kh"
-              onClick={(e) => {
-                setCity("Kharkiv");
-                handleSubmit(e, "Kharkiv");
-              }}
-            >
-              Kharkiv
-            </button>
-            <button
-              className="navbar-brand btn"
-              id="navbar-lv"
-              onClick={(e) => {
-                setCity("Lviv");
-                handleSubmit(e);
-              }}
-            >
-              Lviv
-            </button>
-            <button
-              className="navbar-brand btn"
-              id="navbar-od"
-              onClick={(e) => {
-                setCity("Odessa");
-                handleSubmit(e, "Odessa");
-              }}
-            >
-              Odessa
-            </button>
-            <button
-              className="navbar-brand btn"
-              id="navbar-ky"
-              onClick={(e) => {
-                setCity("Kyiv");
-                handleSubmit(e, Kyiv);
-              }}
-            >
-              Kyiv
-            </button>
-          </nav>
+
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-6">
+                <input
+                  type="search"
+                  placeholder="Enter a city.."
+                  className="form-control"
+                  autoFocus="on"
+                  onChange={handleCityChange}
+                />
+              </div>
+              <div className="col-3">
+                <input
+                  type="submit"
+                  value="Search"
+                  className="btn btn-primary w-100"
+                />
+              </div>
+              <div className="col-3">
+                <button
+                  className="btn btn-success w-100"
+                  type="button"
+                  onClick={getCurrentPosition}
+                  id="current-location-button"
+                >
+                  Current
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <WeatherInfo data={weatherData} />
+          <WeatherForecast coordinates={weatherData.coordinates} />
         </div>
-        <WeatherInfo data={weatherData} />
-        <WeatherForecast coordinates={weatherData.coordinates} />
-      </div>
+      </>
     );
   } else {
     return "Loading...";
